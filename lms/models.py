@@ -3,21 +3,16 @@ from django.db.models import Model, CharField, ImageField, TextField, URLField, 
 
 class Course(Model):
     course_name = CharField(
-        max_length=100,
-        verbose_name="Наименование учебного курса",
-        help_text="Введите наименование учебного курса"
+        max_length=100, verbose_name="Наименование учебного курса", help_text="Введите наименование учебного курса"
     )
     preview = ImageField(
         upload_to="lms/previews/",
         verbose_name="Превью (картинка)",
         blank=True,
         null=True,
-        help_text="Загрузите превью для учебного курса"
+        help_text="Загрузите превью для учебного курса",
     )
-    course_description = TextField(
-        verbose_name="Описание учебного курса",
-        help_text="Введите описание учебного курса"
-    )
+    course_description = TextField(verbose_name="Описание учебного курса", help_text="Введите описание учебного курса")
 
     class Meta:
         verbose_name = "Учебный курс"
@@ -29,16 +24,14 @@ class Course(Model):
 
 
 class Lesson(Model):
-    lesson_name = CharField(
-        max_length=100, verbose_name="Наименование урока", help_text="Введите наименование урока"
-    )
+    lesson_name = CharField(max_length=100, verbose_name="Наименование урока", help_text="Введите наименование урока")
     lesson_description = TextField(verbose_name="Описание урока", help_text="Введите описание урока")
     preview = ImageField(
         upload_to="lms/previews/",
         verbose_name="Превью (картинка)",
         blank=True,
         null=True,
-        help_text="Загрузите превью для урока"
+        help_text="Загрузите превью для урока",
     )
     video_url = URLField(verbose_name="Ссылка на видео урока", help_text="Введите ссылку на видео урока")
     lesson_course = ForeignKey(
