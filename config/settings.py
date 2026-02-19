@@ -56,8 +56,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     # СЮДА ВВОДИ ИМЕНА СВОИХ ПРИЛОЖЕНИЙ
-    # "catalog",
-    # "blog",
+    "lms",
     "users",  # ВАЖНО: ПРИНЯТО ИМЕННО users!, а не user.
 ]
 
