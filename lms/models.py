@@ -58,7 +58,3 @@ class Lesson(Model):
 
     def __str__(self):
         return self.lesson_name
-
-
-
-

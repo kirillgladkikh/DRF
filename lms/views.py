@@ -30,20 +30,3 @@ class LessonUpdateApiView(UpdateAPIView):
 class LessonDestroyApiView(DestroyAPIView):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
-
-
-# from rest_framework.viewsets import ModelViewSet
-# from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-# from lms.models import Course, Lesson
-# from lms.serializers import CourseSerializer  # , LessonSerializer
-#
-#
-# # Получение списка уроков и создание нового
-# class LessonListCreateView(ListCreateAPIView):
-#     queryset = Lesson.objects.all()
-#     serializer_class = LessonSerializer
-#
-# # Получение, обновление и удаление конкретного урока
-# class LessonRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
-#     queryset = Lesson.objects.all()
-#     serializer_class = LessonSerializer
