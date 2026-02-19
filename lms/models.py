@@ -1,20 +1,20 @@
-from django.db import models
+from django.db.models import Model, CharField, ImageField, TextField, URLField, ForeignKey, SET_NULL
 
 
-class Course(models.Model):
-    course_name = models.CharField(
+class Course(Model):
+    course_name = CharField(
         max_length=100,
         verbose_name="Наименование учебного курса",
         help_text="Введите наименование учебного курса"
     )
-    preview = models.ImageField(
+    preview = ImageField(
         upload_to="lms/previews/",
         verbose_name="Превью (картинка)",
         blank=True,
         null=True,
         help_text="Загрузите превью для учебного курса"
     )
-    course_description = models.TextField(
+    course_description = TextField(
         verbose_name="Описание учебного курса",
         help_text="Введите описание учебного курса"
     )
@@ -28,22 +28,22 @@ class Course(models.Model):
         return self.course_name
 
 
-class Lesson(models.Model):
-    lesson_name = models.CharField(
+class Lesson(Model):
+    lesson_name = CharField(
         max_length=100, verbose_name="Наименование урока", help_text="Введите наименование урока"
     )
-    lesson_description = models.TextField(verbose_name="Описание урока", help_text="Введите описание урока")
-    preview = models.ImageField(
+    lesson_description = TextField(verbose_name="Описание урока", help_text="Введите описание урока")
+    preview = ImageField(
         upload_to="lms/previews/",
         verbose_name="Превью (картинка)",
         blank=True,
         null=True,
         help_text="Загрузите превью для урока"
     )
-    video_url = models.URLField(verbose_name="Ссылка на видео урока", help_text="Введите ссылку на видео урока")
-    lesson_course = models.ForeignKey(
+    video_url = URLField(verbose_name="Ссылка на видео урока", help_text="Введите ссылку на видео урока")
+    lesson_course = ForeignKey(
         Course,
-        on_delete=models.SET_NULL,
+        on_delete=SET_NULL,
         verbose_name="Учебный курс",
         help_text="Введите наименование учебного курса к которому относится урок",
         null=True,
