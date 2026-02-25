@@ -23,13 +23,6 @@ class CourseSerializer(ModelSerializer):
         # return obj.courses.count()  # используем related_name="courses" из модели Lesson
 
 
-#     def get_lessons(self, obj):
-#         """Метод для получения информации по всем урокам текущего курса"""
-#         lessons = obj.courses.all()
-#         serializer = LessonSerializer(lessons, many=True)
-#         return serializer.data
-
-
 class LessonSerializer(ModelSerializer):
     class Meta:
         model = Lesson
