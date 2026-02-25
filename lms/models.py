@@ -1,4 +1,4 @@
-from django.db.models import Model, CharField, ImageField, TextField, URLField, ForeignKey, SET_NULL
+from django.db.models import SET_NULL, CharField, ForeignKey, ImageField, Model, TextField, URLField
 
 
 class Course(Model):

@@ -1,7 +1,8 @@
 from django.core.management.base import BaseCommand
 from django.utils import timezone
-from users.models import Payments, User  # Исправлен импорт User
+
 from lms.models import Course, Lesson
+from users.models import Payments, User  # Исправлен импорт User
 
 
 class Command(BaseCommand):
