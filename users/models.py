@@ -1,5 +1,5 @@
 from django.contrib.auth.models import AbstractUser
-from django.db.models import Model, EmailField, ImageField, CharField, ForeignKey, CASCADE, DateTimeField, SET_NULL, DecimalField
+from django.db.models import Model, EmailField, ImageField, CharField, ForeignKey, CASCADE, DateTimeField, SET_NULL, PositiveIntegerField
 from lms.models import Course, Lesson
 
 
@@ -59,9 +59,9 @@ class Payments(Model):
         verbose_name="Отдельно оплаченный урок"
     )
     # сумма оплаты
-    amount = DecimalField(
-        max_digits=10,
-        decimal_places=2,
+    amount = PositiveIntegerField(  # заменяем DecimalField на PositiveIntegerField
+        # max_digits=10,
+        # decimal_places=2,
         verbose_name="Сумма оплаты"
     )
     # способ оплаты
@@ -77,4 +77,4 @@ class Payments(Model):
         ordering = ['-payment_date']  # сортировка по дате оплаты (новые первыми)
 
     def __str__(self):
-        return f"Платеж от {self.user.username} на сумму {self.amount} ({self.payment_method})"
+        return f"Платеж от {self.user.email} на сумму {self.amount} ({self.payment_method})"  # используем email вместо username
