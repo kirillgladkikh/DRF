@@ -143,7 +143,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
-STATICFILES_DIRS = [BASE_DIR / "static"]  # Квадратные скобки обязательны, так как это список путей.
+# STATICFILES_DIRS = [BASE_DIR / "static"]  # Квадратные скобки обязательны, так как это список путей.
 
 MEDIA_URL = "media/"
 MEDIA_ROOT = os.path.join(
