@@ -1,4 +1,5 @@
-from django.db.models import SET_NULL, CharField, ForeignKey, ImageField, Model, TextField, URLField, CASCADE
+from django.db.models import CASCADE, SET_NULL, CharField, ForeignKey, ImageField, Model, TextField, URLField
+
 from config.settings import AUTH_USER_MODEL
 
 
