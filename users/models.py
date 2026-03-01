@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractUser
-from django.db.models import Model, EmailField, ImageField, CharField, ForeignKey, CASCADE, DateTimeField, SET_NULL, DecimalField
+from django.db.models import (CASCADE, SET_NULL, CharField, DateTimeField, EmailField, ForeignKey, ImageField, Model,
+                              PositiveIntegerField)
+
 from lms.models import Course, Lesson
 
 
@@ -27,54 +29,33 @@ class User(AbstractUser):
 
 class Payments(Model):
     PAYMENT_METHOD_CHOICES = [
-        ('cash', 'Наличные'),
-        ('transfer', 'Перевод на счёт'),
+        ("cash", "Наличные"),
+        ("transfer", "Перевод на счёт"),
     ]
 
     # пользователь, совершивший платеж
-    user = ForeignKey(
-        User,
-        on_delete=CASCADE,
-        verbose_name="Пользователь"
-    )
+    user = ForeignKey(User, on_delete=CASCADE, verbose_name="Пользователь")
     # дата оплаты
-    payment_date = DateTimeField(
-        auto_now_add=True,
-        verbose_name="Дата оплаты"
-    )
+    payment_date = DateTimeField(auto_now_add=True, verbose_name="Дата оплаты")
     # оплаченный курс (может быть None, если оплачен только урок)
-    paid_course = ForeignKey(
-        Course,
-        on_delete=SET_NULL,
-        null=True,
-        blank=True,
-        verbose_name="Оплаченный курс"
-    )
+    paid_course = ForeignKey(Course, on_delete=SET_NULL, null=True, blank=True, verbose_name="Оплаченный курс")
     # отдельно оплаченный урок (может быть None, если оплачен курс)
     paid_lesson = ForeignKey(
-        Lesson,
-        on_delete=SET_NULL,
-        null=True,
-        blank=True,
-        verbose_name="Отдельно оплаченный урок"
+        Lesson, on_delete=SET_NULL, null=True, blank=True, verbose_name="Отдельно оплаченный урок"
     )
     # сумма оплаты
-    amount = DecimalField(
-        max_digits=10,
-        decimal_places=2,
+    amount = PositiveIntegerField(  # заменяем DecimalField на PositiveIntegerField
+        # max_digits=10,
+        # decimal_places=2,
         verbose_name="Сумма оплаты"
     )
     # способ оплаты
-    payment_method = CharField(
-        max_length=20,
-        choices=PAYMENT_METHOD_CHOICES,
-        verbose_name="Способ оплаты"
-    )
+    payment_method = CharField(max_length=20, choices=PAYMENT_METHOD_CHOICES, verbose_name="Способ оплаты")
 
     class Meta:
         verbose_name = "Платеж"
         verbose_name_plural = "Платежи"
-        ordering = ['-payment_date']  # сортировка по дате оплаты (новые первыми)
+        ordering = ["-payment_date"]  # сортировка по дате оплаты (новые первыми)
 
     def __str__(self):
-        return f"Платеж от {self.user.username} на сумму {self.amount} ({self.payment_method})"
+        return f"Платеж от {self.user.email} на сумму {self.amount} ({self.payment_method})"  # используем email вместо username
