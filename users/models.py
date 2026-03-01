@@ -1,6 +1,15 @@
 from django.contrib.auth.models import AbstractUser
-from django.db.models import (CASCADE, SET_NULL, CharField, DateTimeField, EmailField, ForeignKey, ImageField, Model,
-                              PositiveIntegerField)
+from django.db.models import (
+    CASCADE,
+    SET_NULL,
+    CharField,
+    DateTimeField,
+    EmailField,
+    ForeignKey,
+    ImageField,
+    Model,
+    PositiveIntegerField,
+)
 
 from lms.models import Course, Lesson
 
