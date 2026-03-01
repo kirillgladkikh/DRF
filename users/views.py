@@ -5,7 +5,7 @@ from users.filters import PaymentFilter
 from users.models import Payments
 from users.serializers import PaymentSerializer, UserSerializer
 
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework.permissions import AllowAny
 from users.models import User
 
@@ -19,6 +19,7 @@ class PaymentViewSet(viewsets.ModelViewSet):
     ordering = ["-payment_date"]  # по умолчанию — новые первыми
 
 
+# CRUD для модели User с использованием generics
 class UserCreateAPIView(CreateAPIView):
     serializer_class = UserSerializer
     queryset = User.objects.all()
@@ -28,3 +29,23 @@ class UserCreateAPIView(CreateAPIView):
         user = serializer.save(is_active=True)
         user.set_password(user.password)
         user.save()
+
+
+class LessonListApiView(ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class LessonRetrieveApiView(RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class LessonUpdateApiView(UpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class LessonDestroyApiView(DestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
