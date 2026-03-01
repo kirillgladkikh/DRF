@@ -1,6 +1,5 @@
 from rest_framework.serializers import ModelSerializer, StringRelatedField
-
-from users.models import Payments
+from users.models import Payments, User
 
 
 class PaymentSerializer(ModelSerializer):
@@ -23,3 +22,9 @@ class PaymentSerializer(ModelSerializer):
             "amount",
             "payment_method",
         ]
+
+
+class UserSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = "__all__"
