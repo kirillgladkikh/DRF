@@ -31,21 +31,21 @@ class UserCreateAPIView(CreateAPIView):
         user.save()
 
 
-class LessonListApiView(ListAPIView):
+class UserListApiView(ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 
-class LessonRetrieveApiView(RetrieveAPIView):
+class UserRetrieveApiView(RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 
-class LessonUpdateApiView(UpdateAPIView):
+class UserUpdateApiView(UpdateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 
-class LessonDestroyApiView(DestroyAPIView):
+class UserDestroyApiView(DestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
