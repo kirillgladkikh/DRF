@@ -16,7 +16,8 @@ urlpatterns = [
     path('token/', TokenObtainPairView.as_view(permission_classes = (AllowAny,)), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(permission_classes = (AllowAny,)), name='token_refresh'),
 
-    path("users/<int:pk>/", UserRetrieveApiView.as_view(), name="users_retrieve"),
-    path("users/<int:pk>/update/", UserUpdateApiView.as_view(), name="users_update"),
-    path("users/<int:pk>/delete/", UserDestroyApiView.as_view(), name="users_delete"),
+    path(" /", UserListApiView.as_view(), name="users_list"),
+    path("<int:pk>/", UserRetrieveApiView.as_view(), name="users_retrieve"),
+    path("<int:pk>/update/", UserUpdateApiView.as_view(), name="users_update"),
+    path("<int:pk>/delete/", UserDestroyApiView.as_view(), name="users_delete"),
 ]
