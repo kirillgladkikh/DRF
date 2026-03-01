@@ -11,7 +11,7 @@ router = SimpleRouter()
 router.register("", CourseViewSet)
 
 urlpatterns = [
-    path(" /", LessonListApiView.as_view(), name="lessons_list"),
+    path("", LessonListApiView.as_view(), name="lessons_list"),  # " /"
     path("lessons/<int:pk>/", LessonRetrieveApiView.as_view(), name="lessons_retrieve"),
     path("lessons/create/", LessonCreateApiView.as_view(), name="lessons_create"),
     path("lessons/<int:pk>/delete/", LessonDestroyApiView.as_view(), name="lessons_delete"),
