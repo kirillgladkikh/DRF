@@ -5,9 +5,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from django.conf.global_settings import MEDIA_ROOT, MEDIA_URL, STATICFILES_DIRS
-
 from datetime import timedelta
+
+from django.conf.global_settings import MEDIA_ROOT, MEDIA_URL, STATICFILES_DIRS
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -45,10 +45,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     "rest_framework",
     "django_filters",
-    'rest_framework_simplejwt',
+    "rest_framework_simplejwt",
     # СЮДА ВВОДИ ИМЕНА СВОИХ ПРИЛОЖЕНИЙ
     "lms",
     "users",  # ВАЖНО: ПРИНЯТО ИМЕННО users!, а не user.
@@ -158,19 +157,19 @@ AUTH_USER_MODEL = "users.User"
 
 # Настройки JWT-токенов
 REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',  # 'rest_framework.permissions.AllowAny',
-    ]
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",  # 'rest_framework.permissions.AllowAny',
+    ],
 }
 
 # Настройки срока действия токенов
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 }
 
 # ВАЖНО:

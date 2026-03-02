@@ -66,7 +66,7 @@ class Command(BaseCommand):
                 lesson_name=lesson_name,
                 defaults={
                     "lesson_description": lesson_desc,
-                    "video_url": f"https://example.com/video{i+1}.mp4",
+                    "video_url": f"https://example.com/video{i + 1}.mp4",
                     "lesson_course": created_courses[i],
                 },
             )
