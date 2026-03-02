@@ -12,6 +12,12 @@ class CourseViewSet(ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
 
+    def get_queryset(self):
+        qs = super().get_queryset()
+        if not self.request.user.groups.filter(name='moders').exists():
+            qs = qs.filter(owner=self.request.user)
+        return qs
+
     def get_permissions(self):
         # Решение для Задания 3
         if self.action in ["create"]:
@@ -43,9 +49,6 @@ class LessonCreateApiView(CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
-        # new_lesson = serializer.save()
-        # new_lesson.owner = self.request.user
-        # new_lesson.save()
 
 
 class LessonListApiView(ListAPIView):
@@ -55,6 +58,12 @@ class LessonListApiView(ListAPIView):
         IsAuthenticated,
         IsModer | IsOwner,
     )
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        if not self.request.user.groups.filter(name='moders').exists():
+            qs = qs.filter(owner=self.request.user)
+        return qs
 
 
 class LessonRetrieveApiView(RetrieveAPIView):
@@ -82,4 +91,3 @@ class LessonDestroyApiView(DestroyAPIView):
         IsAuthenticated,
         IsOwner,
     )
-    # permission_classes = (IsAuthenticated, ~IsModer | IsOwner,)
