@@ -1,16 +1,18 @@
-from rest_framework.serializers import ModelSerializer, SerializerMethodField
+from rest_framework import serializers
+# from rest_framework.serializers import ModelSerializer, SerializerMethodField
 
 from lms.models import Course, Lesson
+from lms.validators import validate_youtube
 
 
-class LessonShortSerializer(ModelSerializer):
+class LessonShortSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lesson
         fields = ["id", "lesson_name", "preview", "video_url"]
 
 
-class CourseSerializer(ModelSerializer):
-    lessons_count = SerializerMethodField()  # количество уроков в курсе
+class CourseSerializer(serializers.ModelSerializer):
+    lessons_count = serializers.SerializerMethodField()  # количество уроков в курсе
     lessons = LessonShortSerializer(many=True)  # используем новый сериализатор  # информация по всем урокам курса
 
     class Meta:
@@ -23,7 +25,9 @@ class CourseSerializer(ModelSerializer):
         # return obj.courses.count()  # используем related_name="courses" из модели Lesson
 
 
-class LessonSerializer(ModelSerializer):
+class LessonSerializer(serializers.ModelSerializer):
+    video_url = serializers.URLField(validators=[validate_youtube], help_text="Только ссылки youtube.com")
+
     class Meta:
         model = Lesson
         fields = "__all__"
