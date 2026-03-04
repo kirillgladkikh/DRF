@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer, StringRelatedField
 
-from users.models import Payments, User
+from users.models import Payments, User, Subscription
 
 
 class PaymentSerializer(ModelSerializer):
@@ -29,3 +29,12 @@ class UserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = "__all__"
+
+
+class SubscriptionSerializer(ModelSerializer):
+    user_email = StringRelatedField(source="user.email", read_only=True)
+    course_name = StringRelatedField(source="course.course_name", read_only=True)
+
+    class Meta:
+        model = Subscription
+        fields = ["id", "user", "user_email", "course", "coursename", "created_at"]
