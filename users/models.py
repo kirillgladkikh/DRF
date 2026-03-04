@@ -1,15 +1,6 @@
 from django.contrib.auth.models import AbstractUser
-from django.db.models import (
-    CASCADE,
-    SET_NULL,
-    CharField,
-    DateTimeField,
-    EmailField,
-    ForeignKey,
-    ImageField,
-    Model,
-    PositiveIntegerField,
-)
+from django.db.models import (CASCADE, SET_NULL, CharField, DateTimeField, EmailField, ForeignKey, ImageField, Model,
+                              PositiveIntegerField)
 
 from lms.models import Course, Lesson
 
@@ -73,6 +64,7 @@ class Payments(Model):
 
 class Subscription(Model):
     """Модель подписки пользователя на обновления курса."""
+
     user = ForeignKey(User, on_delete=CASCADE, verbose_name="Пользователь", related_name="subscriptions")
     course = ForeignKey(Course, on_delete=CASCADE, verbose_name="Курс", related_name="subscribers")
 

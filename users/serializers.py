@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer, StringRelatedField
 
-from users.models import Payments, User, Subscription
+from users.models import Payments, Subscription, User
 
 
 class PaymentSerializer(ModelSerializer):

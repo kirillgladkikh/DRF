@@ -1,19 +1,15 @@
+from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend, OrderingFilter
-from rest_framework import viewsets
+from rest_framework import status, viewsets
 from rest_framework.generics import CreateAPIView, DestroyAPIView, ListAPIView, RetrieveAPIView, UpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
-
-from users.filters import PaymentFilter
-from users.models import Payments, User
-from users.serializers import PaymentSerializer, UserSerializer
-
-from django.shortcuts import get_object_or_404
-from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework.views import APIView
 
 from lms.models import Course
-from users.models import Subscription
+from users.filters import PaymentFilter
+from users.models import Payments, Subscription, User
+from users.serializers import PaymentSerializer, UserSerializer
 
 
 class PaymentViewSet(viewsets.ModelViewSet):
@@ -59,6 +55,7 @@ class UserDestroyApiView(DestroyAPIView):
 
 class SubscriptionAPIView(APIView):
     """API для управления подпиской пользователя на курс."""
+
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
@@ -67,8 +64,7 @@ class SubscriptionAPIView(APIView):
 
         if not course_id:
             return Response(
-                {"error": "Поле 'course_id' обязательно для заполнения."},
-                status=status.HTTP_400_BAD_REQUEST
+                {"error": "Поле 'course_id' обязательно для заполнения."}, status=status.HTTP_400_BAD_REQUEST
             )
 
         course_item = get_object_or_404(Course, id=course_id)
@@ -85,9 +81,6 @@ class SubscriptionAPIView(APIView):
             message = "Подписка добавлена"
             action = "subscribed"
 
-        return Response({
-            "message": message,
-            "action": action,
-            "course_id": course_item.id,
-            "course_name": course_item.course_name
-        })
+        return Response(
+            {"message": message, "action": action, "course_id": course_item.id, "course_name": course_item.course_name}
+        )

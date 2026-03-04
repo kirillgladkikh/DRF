@@ -16,7 +16,7 @@ class CourseViewSet(ModelViewSet):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        if not self.request.user.groups.filter(name='moders').exists():
+        if not self.request.user.groups.filter(name="moders").exists():
             qs = qs.filter(owner=self.request.user)
         return qs
 
@@ -64,7 +64,7 @@ class LessonListApiView(ListAPIView):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        if not self.request.user.groups.filter(name='moders').exists():
+        if not self.request.user.groups.filter(name="moders").exists():
             qs = qs.filter(owner=self.request.user)
         return qs
 
