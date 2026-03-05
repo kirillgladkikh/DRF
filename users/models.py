@@ -1,15 +1,6 @@
 from django.contrib.auth.models import AbstractUser
-from django.db.models import (
-    CASCADE,
-    SET_NULL,
-    CharField,
-    DateTimeField,
-    EmailField,
-    ForeignKey,
-    ImageField,
-    Model,
-    PositiveIntegerField,
-)
+from django.db.models import (CASCADE, SET_NULL, CharField, DateTimeField, EmailField, ForeignKey, ImageField, Model,
+                              PositiveIntegerField)
 
 from lms.models import Course, Lesson
 
@@ -69,3 +60,19 @@ class Payments(Model):
     def __str__(self):
         return f"Платеж от {self.user.email} на сумму {self.amount} ({self.payment_method})"
         # используем email вместо username
+
+
+class Subscription(Model):
+    """Модель подписки пользователя на обновления курса."""
+
+    user = ForeignKey(User, on_delete=CASCADE, verbose_name="Пользователь", related_name="subscriptions")
+    course = ForeignKey(Course, on_delete=CASCADE, verbose_name="Курс", related_name="subscribers")
+
+    class Meta:
+        verbose_name = "Подписка"
+        verbose_name_plural = "Подписки"
+        # Гарантируем уникальность: один пользователь может подписаться на курс только один раз
+        unique_together = ("user", "course")
+
+    def __str__(self):
+        return f"{self.user.email} → {self.course.course_name}"

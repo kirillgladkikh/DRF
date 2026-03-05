@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
 from lms.models import Course, Lesson
+from lms.paginators import CustomPagination
 from lms.serializers import CourseSerializer, LessonSerializer
 from users.permissions import IsModer, IsOwner
 
@@ -11,10 +12,11 @@ from users.permissions import IsModer, IsOwner
 class CourseViewSet(ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
+    pagination_class = CustomPagination
 
     def get_queryset(self):
         qs = super().get_queryset()
-        if not self.request.user.groups.filter(name='moders').exists():
+        if not self.request.user.groups.filter(name="moders").exists():
             qs = qs.filter(owner=self.request.user)
         return qs
 
@@ -54,6 +56,7 @@ class LessonCreateApiView(CreateAPIView):
 class LessonListApiView(ListAPIView):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
+    pagination_class = CustomPagination
     permission_classes = (
         IsAuthenticated,
         IsModer | IsOwner,
@@ -61,7 +64,7 @@ class LessonListApiView(ListAPIView):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        if not self.request.user.groups.filter(name='moders').exists():
+        if not self.request.user.groups.filter(name="moders").exists():
             qs = qs.filter(owner=self.request.user)
         return qs
 
