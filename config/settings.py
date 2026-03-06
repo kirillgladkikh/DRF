@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "django_filters",
     "rest_framework_simplejwt",
+    "drf_yasg",
     # СЮДА ВВОДИ ИМЕНА СВОИХ ПРИЛОЖЕНИЙ
     "lms",
     "users",  # ВАЖНО: ПРИНЯТО ИМЕННО users!, а не user.
