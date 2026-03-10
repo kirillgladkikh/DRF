@@ -9,6 +9,7 @@ from django.db.models import (
     ImageField,
     Model,
     PositiveIntegerField,
+    URLField,
 )
 
 from lms.models import Course, Lesson
@@ -40,6 +41,7 @@ class Payments(Model):
     PAYMENT_METHOD_CHOICES = [
         ("cash", "Наличные"),
         ("transfer", "Перевод на счёт"),
+        ("stripe", "Оплата через Stripe"),
     ]
 
     # пользователь, совершивший платеж
@@ -53,13 +55,30 @@ class Payments(Model):
         Lesson, on_delete=SET_NULL, null=True, blank=True, verbose_name="Отдельно оплаченный урок"
     )
     # сумма оплаты
-    amount = PositiveIntegerField(  # заменяем DecimalField на PositiveIntegerField
-        # max_digits=10,
-        # decimal_places=2,
-        verbose_name="Сумма оплаты"
+    amount = PositiveIntegerField(
+        verbose_name="Сумма оплаты",
+        help_text="Укажите сумму оплаты"
     )
     # способ оплаты
     payment_method = CharField(max_length=20, choices=PAYMENT_METHOD_CHOICES, verbose_name="Способ оплаты")
+
+    # поля для интеграции с Stripe
+    stripe_session_id = CharField(max_length=255, blank=True, null=True, verbose_name="ID сессии в Stripe", help_text="Укажите ID сессии в Stripe")
+    stripe_payment_link = URLField(max_length=400, blank=True, null=True, verbose_name="Ссылка на оплату в Stripe", help_text="Укажите ссылку на оплату в Stripe")
+    # stripe_user = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, verbose_name="Пользователь", help_text="Укажите пользователя")
+    stripe_product_id = CharField(max_length=100, blank=True, null=True, verbose_name="ID продукта в Stripe")
+    stripe_price_id = CharField(max_length=100, blank=True, null=True, verbose_name="ID цены в Stripe")
+    status = CharField(
+        max_length=20,
+        choices=[
+            ("pending", "Ожидает оплаты"),
+            ("succeeded", "Успешно"),
+            ("failed", "Ошибка"),
+            ("canceled", "Отменён"),
+        ],
+        default="pending",
+        verbose_name="Статус платежа"
+    )
 
     class Meta:
         verbose_name = "Платеж"
@@ -68,7 +87,6 @@ class Payments(Model):
 
     def __str__(self):
         return f"Платеж от {self.user.email} на сумму {self.amount} ({self.payment_method})"
-        # используем email вместо username
 
 
 class Subscription(Model):

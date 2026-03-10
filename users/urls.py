@@ -10,6 +10,7 @@ from users.views import (
     UserListApiView,
     UserRetrieveApiView,
     UserUpdateApiView,
+    payment_callback,
 )
 
 app_name = UsersConfig.name
@@ -23,4 +24,6 @@ urlpatterns = [
     path("<int:pk>/update/", UserUpdateApiView.as_view(), name="users_update"),
     path("<int:pk>/delete/", UserDestroyApiView.as_view(), name="users_delete"),
     path("subscription/", SubscriptionAPIView.as_view(), name="subscription"),
+
+    path('payment/callback/', payment_callback, name='payment_callback'),
 ]
