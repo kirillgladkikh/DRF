@@ -2,7 +2,6 @@ import stripe
 
 from config.settings import STRIPE_SECRET_KEY
 
-# from django.conf import settings
 
 # Устанавливаем секретный ключ Stripe из настроек
 stripe.api_key = STRIPE_SECRET_KEY

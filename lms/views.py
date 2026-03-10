@@ -32,12 +32,6 @@ class CourseViewSet(ModelViewSet):
 
         return qs
 
-    # def get_queryset(self):
-    #     qs = super().get_queryset()
-    #     if not self.request.user.groups.filter(name="moders").exists():
-    #         qs = qs.filter(owner=self.request.user)
-    #     return qs
-
     def get_permissions(self):
         # Решение для Задания 3
         if self.action in ["create"]:
@@ -45,13 +39,6 @@ class CourseViewSet(ModelViewSet):
         elif self.action in ["list", "update", "retrieve", "destroy"]:
             self.permission_classes = (~IsModer | IsOwner,)
         return super().get_permissions()
-
-        # # Решение для Задания 2
-        # if self.action in ["create", "destroy"]:
-        #     self.permission_classes = (~IsModer,)
-        # elif self.action in ["update", "retrieve"]:
-        #     self.permission_classes = (IsModer,)
-        # return super().get_permissions()
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)

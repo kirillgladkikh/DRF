@@ -137,8 +137,6 @@ class PaymentCreateAPIView(CreateAPIView):
             base_url = self.request.build_absolute_uri("/")
             success_url = f"{base_url}api/payment/callback/?status=success&payment_id={payment.id}"
             cancel_url = f"{base_url}api/payment/callback/?status=canceled&payment_id={payment.id}"
-            # success_url = f"{self.request.build_absolute_uri('/')}/payment/success/"
-            # cancel_url = f"{self.request.build_absolute_uri('/')}/payment/cancel/"
 
             # Создаём сессию оплаты в Stripe
             session_id, session_url = create_stripe_session(
