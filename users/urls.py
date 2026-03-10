@@ -3,15 +3,8 @@ from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from users.apps import UsersConfig
-from users.views import (
-    SubscriptionAPIView,
-    UserCreateAPIView,
-    UserDestroyApiView,
-    UserListApiView,
-    UserRetrieveApiView,
-    UserUpdateApiView,
-    payment_callback,
-)
+from users.views import (SubscriptionAPIView, UserCreateAPIView, UserDestroyApiView, UserListApiView,
+                         UserRetrieveApiView, UserUpdateApiView, payment_callback)
 
 app_name = UsersConfig.name
 
@@ -24,6 +17,5 @@ urlpatterns = [
     path("<int:pk>/update/", UserUpdateApiView.as_view(), name="users_update"),
     path("<int:pk>/delete/", UserDestroyApiView.as_view(), name="users_delete"),
     path("subscription/", SubscriptionAPIView.as_view(), name="subscription"),
-
-    path('payment/callback/', payment_callback, name='payment_callback'),
+    path("payment/callback/", payment_callback, name="payment_callback"),
 ]

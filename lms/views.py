@@ -16,7 +16,7 @@ class CourseViewSet(ModelViewSet):
 
     def get_queryset(self):
         # Проверка на генерацию схемы Swagger
-        if getattr(self, 'swagger_fake_view', False):
+        if getattr(self, "swagger_fake_view", False):
             return self.queryset.none()  # Возвращаем пустой QuerySet для схемы
 
         qs = super().get_queryset()
@@ -31,6 +31,7 @@ class CourseViewSet(ModelViewSet):
             qs = qs.filter(owner=self.request.user)
 
         return qs
+
     # def get_queryset(self):
     #     qs = super().get_queryset()
     #     if not self.request.user.groups.filter(name="moders").exists():

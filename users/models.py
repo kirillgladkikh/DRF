@@ -1,16 +1,6 @@
 from django.contrib.auth.models import AbstractUser
-from django.db.models import (
-    CASCADE,
-    SET_NULL,
-    CharField,
-    DateTimeField,
-    EmailField,
-    ForeignKey,
-    ImageField,
-    Model,
-    PositiveIntegerField,
-    URLField,
-)
+from django.db.models import (CASCADE, SET_NULL, CharField, DateTimeField, EmailField, ForeignKey, ImageField, Model,
+                              PositiveIntegerField, URLField)
 
 from lms.models import Course, Lesson
 
@@ -55,16 +45,25 @@ class Payments(Model):
         Lesson, on_delete=SET_NULL, null=True, blank=True, verbose_name="Отдельно оплаченный урок"
     )
     # сумма оплаты
-    amount = PositiveIntegerField(
-        verbose_name="Сумма оплаты",
-        help_text="Укажите сумму оплаты"
-    )
+    amount = PositiveIntegerField(verbose_name="Сумма оплаты", help_text="Укажите сумму оплаты")
     # способ оплаты
     payment_method = CharField(max_length=20, choices=PAYMENT_METHOD_CHOICES, verbose_name="Способ оплаты")
 
     # поля для интеграции с Stripe
-    stripe_session_id = CharField(max_length=255, blank=True, null=True, verbose_name="ID сессии в Stripe", help_text="Укажите ID сессии в Stripe")
-    stripe_payment_link = URLField(max_length=400, blank=True, null=True, verbose_name="Ссылка на оплату в Stripe", help_text="Укажите ссылку на оплату в Stripe")
+    stripe_session_id = CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        verbose_name="ID сессии в Stripe",
+        help_text="Укажите ID сессии в Stripe",
+    )
+    stripe_payment_link = URLField(
+        max_length=400,
+        blank=True,
+        null=True,
+        verbose_name="Ссылка на оплату в Stripe",
+        help_text="Укажите ссылку на оплату в Stripe",
+    )
     # stripe_user = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True, verbose_name="Пользователь", help_text="Укажите пользователя")
     stripe_product_id = CharField(max_length=100, blank=True, null=True, verbose_name="ID продукта в Stripe")
     stripe_price_id = CharField(max_length=100, blank=True, null=True, verbose_name="ID цены в Stripe")
@@ -77,7 +76,7 @@ class Payments(Model):
             ("canceled", "Отменён"),
         ],
         default="pending",
-        verbose_name="Статус платежа"
+        verbose_name="Статус платежа",
     )
 
     class Meta:
