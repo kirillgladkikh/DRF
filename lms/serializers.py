@@ -23,7 +23,6 @@ class CourseSerializer(serializers.ModelSerializer):
         return obj.lesson_set.count()
 
 
-
 class LessonSerializer(serializers.ModelSerializer):
     video_url = serializers.URLField(validators=[validate_youtube], help_text="Только ссылки youtube.com")
 
