@@ -15,9 +15,21 @@ class CourseViewSet(ModelViewSet):
     pagination_class = CustomPagination
 
     def get_queryset(self):
+        # Проверка на генерацию схемы Swagger
+        if getattr(self, "swagger_fake_view", False):
+            return self.queryset.none()  # Возвращаем пустой QuerySet для схемы
+
         qs = super().get_queryset()
+
+        # Проверяем, что пользователь аутентифицирован
+        if not self.request.user.is_authenticated:
+            return qs.none()  # Для неавторизованных — пустой набор
+
+        # Проверяем наличие группы "moders"
         if not self.request.user.groups.filter(name="moders").exists():
+            # Обычные пользователи видят только свои курсы
             qs = qs.filter(owner=self.request.user)
+
         return qs
 
     def get_permissions(self):
@@ -26,14 +38,6 @@ class CourseViewSet(ModelViewSet):
             self.permission_classes = (~IsModer,)
         elif self.action in ["list", "update", "retrieve", "destroy"]:
             self.permission_classes = (~IsModer | IsOwner,)
-        return super().get_permissions()
-
-        # # Решение для Задания 2
-        # if self.action in ["create", "destroy"]:
-        #     self.permission_classes = (~IsModer,)
-        # elif self.action in ["update", "retrieve"]:
-        #     self.permission_classes = (IsModer,)
-
         return super().get_permissions()
 
     def perform_create(self, serializer):

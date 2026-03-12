@@ -1,5 +1,4 @@
 from rest_framework import serializers
-# from rest_framework.serializers import ModelSerializer, SerializerMethodField
 
 from lms.models import Course, Lesson
 from lms.validators import validate_youtube
@@ -21,8 +20,8 @@ class CourseSerializer(serializers.ModelSerializer):
 
     def get_lessons_count(self, obj):
         """Метод для подсчёта количества уроков для текущего курса (obj)"""
-        return obj.lesson_set.count()  # стало
-        # return obj.courses.count()  # используем related_name="courses" из модели Lesson
+        return obj.lesson_set.count()
+
 
 
 class LessonSerializer(serializers.ModelSerializer):

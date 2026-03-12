@@ -4,11 +4,9 @@ from users.models import Payments, Subscription, User
 
 
 class PaymentSerializer(ModelSerializer):
-    user = StringRelatedField()  # выводит username пользователя
+    user = StringRelatedField()
     paid_course_name = StringRelatedField(source="paid_course.course_name")
     paid_lesson_name = StringRelatedField(source="paid_lesson.lesson_name")
-    # paid_course = StringRelatedField()  # выводит название курса
-    # paid_lesson = StringRelatedField()  # выводит название урока
 
     class Meta:
         model = Payments
@@ -22,6 +20,20 @@ class PaymentSerializer(ModelSerializer):
             "paid_lesson_name",
             "amount",
             "payment_method",
+            # поля для интеграции с Stripe
+            "stripe_product_id",
+            "stripe_price_id",
+            "stripe_session_id",
+            "stripe_payment_link",
+            "status",
+        ]
+        # поля для интеграции с Stripe
+        read_only_fields = [
+            "stripe_product_id",
+            "stripe_price_id",
+            "stripe_session_id",
+            "stripe_payment_link",
+            "status",
         ]
 
 

@@ -7,7 +7,7 @@ load_dotenv()
 
 from datetime import timedelta
 
-from django.conf.global_settings import MEDIA_ROOT, MEDIA_URL, STATICFILES_DIRS
+# from django.conf.global_settings import MEDIA_ROOT, MEDIA_URL, STATICFILES_DIRS
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,6 +26,8 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # # config/secret_key_gen.py
 # from django.core.management.utils import get_random_secret_key
 # print(get_random_secret_key())
+
+STRIPE_SECRET_KEY = os.getenv("STRIPE_API_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -48,6 +50,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "django_filters",
     "rest_framework_simplejwt",
+    "drf_yasg",
     # СЮДА ВВОДИ ИМЕНА СВОИХ ПРИЛОЖЕНИЙ
     "lms",
     "users",  # ВАЖНО: ПРИНЯТО ИМЕННО users!, а не user.
