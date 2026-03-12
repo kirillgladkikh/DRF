@@ -5,7 +5,7 @@ description = ""
 authors = [
     {name = "Kirill Gladkikh",email = "k.gladkikh@mail.ru"}
 ]
-requires-python = ">=3.13"
+requires-python = "=3.13.5"
 dependencies = [
     "psycopg2-binary (>=2.9.11,<3.0.0)",
     "djangorestframework (>=3.16.1,<4.0.0)",
@@ -19,7 +19,10 @@ dependencies = [
     "flake8 (>=7.3.0,<8.0.0)",
     "coverage (>=7.13.4,<8.0.0)",
     "drf-yasg (>=1.21.15,<2.0.0)",
-    "stripe (>=14.4.1,<15.0.0)"
+    "stripe (>=14.4.1,<15.0.0)",
+    "django-celery-beat (>=2.9.0,<3.0.0)",
+    "celery (>=5.6.2,<6.0.0)",
+    "eventlet (>=0.40.4,<0.41.0)"
 ]
 
 [build-system]
@@ -28,6 +31,7 @@ build-backend = "poetry.core.masonry.api"
 
 # Конфигурация линтеров:
 [tool.black]
+target-version = ['py313']
 # Максимальная длина строки
 line-length = 119
 # Файлы, которые не нужно форматировать
