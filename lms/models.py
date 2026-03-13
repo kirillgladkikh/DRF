@@ -1,4 +1,14 @@
-from django.db.models import CASCADE, SET_NULL, CharField, ForeignKey, ImageField, Model, TextField, URLField, DateTimeField
+from django.db.models import (
+    CASCADE,
+    SET_NULL,
+    CharField,
+    DateTimeField,
+    ForeignKey,
+    ImageField,
+    Model,
+    TextField,
+    URLField,
+)
 
 from config.settings import AUTH_USER_MODEL
 
@@ -19,7 +29,7 @@ class Course(Model):
     updated_at = DateTimeField(
         auto_now=True,  # автоматически обновляется при каждом save()
         verbose_name="Дата последнего обновления",
-        help_text="Дата и время последнего изменения курса"
+        help_text="Дата и время последнего изменения курса",
     )
 
     class Meta:
@@ -55,7 +65,7 @@ class Lesson(Model):
     updated_at = DateTimeField(
         auto_now=True,  # автоматически обновляется при каждом save()
         verbose_name="Дата последнего обновления",
-        help_text="Дата и время последнего изменения урока"
+        help_text="Дата и время последнего изменения урока",
     )
 
     class Meta:

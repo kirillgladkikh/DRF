@@ -205,7 +205,7 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 # Настройки для Celery
 
 # URL-адрес брокера сообщений
-CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL") # Например, Redis, который по умолчанию работает на порту 6379
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")  # Например, Redis, который по умолчанию работает на порту 6379
 
 # URL-адрес брокера результатов, также Redis
 CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND")

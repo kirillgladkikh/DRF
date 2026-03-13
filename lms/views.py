@@ -1,16 +1,15 @@
 from rest_framework import status
+from rest_framework.decorators import action
 from rest_framework.generics import CreateAPIView, DestroyAPIView, ListAPIView, RetrieveAPIView, UpdateAPIView
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from lms.models import Course, Lesson
 from lms.paginators import CustomPagination
 from lms.serializers import CourseSerializer, LessonSerializer
-from users.permissions import IsModer, IsOwner
-
-from rest_framework.decorators import action
-from rest_framework.response import Response
 from lms.tasks import send_course_update_notification  # задача Celery
+from users.permissions import IsModer, IsOwner
 
 
 # CRUD для модели Course с использованием ViewSet
@@ -48,7 +47,7 @@ class CourseViewSet(ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
-    @action(detail=True, methods=['patch'])
+    @action(detail=True, methods=["patch"])
     def notify_update(self, request, pk=None):
         """
         Обновление курса с отправкой уведомлений.
@@ -64,7 +63,8 @@ class CourseViewSet(ModelViewSet):
 
             # Получаем всех подписчиков курса
             from lms.models import Subscription  # Импорт модели подписчиков
-            subscribers = Subscription.objects.filter(course=updated_course).select_related('user')
+
+            subscribers = Subscription.objects.filter(course=updated_course).select_related("user")
 
             # Извлекаем список email-адресов подписчиков
             subscribers_email = [subscriber.user.email for subscriber in subscribers if subscriber.user.email]
@@ -72,24 +72,25 @@ class CourseViewSet(ModelViewSet):
             if subscribers_email:  # Если есть email-адреса для отправки
                 # Запускаем асинхронную задачу по отправке уведомлений
                 from lms.tasks import send_course_update_notification
+
                 send_course_update_notification.delay(updated_course.id, subscribers_email)
 
                 return Response(
                     {
-                        'message': 'Курс успешно обновлён, уведомления отправлены подписчикам',
-                        'course': serializer.data,
-                        'email_count': len(subscribers_email)  # Добавляем количество отправленных писем
+                        "message": "Курс успешно обновлён, уведомления отправлены подписчикам",
+                        "course": serializer.data,
+                        "email_count": len(subscribers_email),  # Добавляем количество отправленных писем
                     },
-                    status=status.HTTP_200_OK
+                    status=status.HTTP_200_OK,
                 )
             else:
                 # Если нет валидных email-адресов
                 return Response(
                     {
-                        'message': 'Курс успешно обновлён, но email-адреса для отправки уведомлений отсутствуют',
-                        'course': serializer.data
+                        "message": "Курс успешно обновлён, но email-адреса для отправки уведомлений отсутствуют",
+                        "course": serializer.data,
                     },
-                    status=status.HTTP_200_OK
+                    status=status.HTTP_200_OK,
                 )
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
