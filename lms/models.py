@@ -1,4 +1,14 @@
-from django.db.models import CASCADE, SET_NULL, CharField, ForeignKey, ImageField, Model, TextField, URLField
+from django.db.models import (
+    CASCADE,
+    SET_NULL,
+    CharField,
+    DateTimeField,
+    ForeignKey,
+    ImageField,
+    Model,
+    TextField,
+    URLField,
+)
 
 from config.settings import AUTH_USER_MODEL
 
@@ -16,6 +26,11 @@ class Course(Model):
     )
     course_description = TextField(verbose_name="Описание учебного курса", help_text="Введите описание учебного курса")
     owner = ForeignKey(AUTH_USER_MODEL, on_delete=CASCADE, null=True, blank=True)
+    updated_at = DateTimeField(
+        auto_now=True,  # автоматически обновляется при каждом save()
+        verbose_name="Дата последнего обновления",
+        help_text="Дата и время последнего изменения курса",
+    )
 
     class Meta:
         verbose_name = "Учебный курс"
@@ -47,6 +62,11 @@ class Lesson(Model):
         related_name="courses",
     )
     owner = ForeignKey(AUTH_USER_MODEL, on_delete=CASCADE, null=True, blank=True)
+    updated_at = DateTimeField(
+        auto_now=True,  # автоматически обновляется при каждом save()
+        verbose_name="Дата последнего обновления",
+        help_text="Дата и время последнего изменения урока",
+    )
 
     class Meta:
         verbose_name = "Урок"
